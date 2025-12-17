@@ -6,7 +6,6 @@ Peers automatically discover each other on a local network and can request files
 
 The project focuses on **networking fundamentals, application-layer reliability, concurrency, and distributed systems concepts**, making it suitable for SDE and Data Engineering interviews.
 
----
 
 ## Key Features
 - Peer discovery over LAN using **UDP broadcast**
@@ -18,7 +17,6 @@ The project focuses on **networking fundamentals, application-layer reliability,
 - Simple and interactive **CLI**
 - Windows-safe socket handling
 
----
 
 ## Architecture
 
@@ -28,12 +26,12 @@ Peer
  ├── Receiver Thread (blocking UDP socket)
  ├── Sender Logic (timeout-based UDP socket)
  └── Command-Line Interface
-
+```
 
 Each peer acts as both a **client** (requesting files) and a **server** (serving files).  
 No centralized server is required.
 
----
+
 
 ## Protocol Design
 
@@ -46,7 +44,6 @@ No centralized server is required.
 | ACK | Chunk acknowledgement |
 | FILES | Local file listing |
 
----
 
 ### Chunking and Sequencing
 - Files are split into **fixed-size chunks (1024 bytes)**
@@ -55,7 +52,7 @@ No centralized server is required.
   - Correct ordering
   - Detection of missing packets
 
----
+
 
 ### Reliability Mechanism
 Since UDP does not guarantee delivery:
@@ -65,7 +62,6 @@ Since UDP does not guarantee delivery:
 
 This implements **application-layer reliability**, conceptually similar to TCP but intentionally simplified.
 
----
 
 ## Concurrency Model
 To avoid race conditions and socket conflicts:
@@ -78,7 +74,6 @@ To avoid race conditions and socket conflicts:
 
 Using separate sockets ensures clean concurrency and avoids timeout interference between threads.
 
----
 
 ## Command-Line Interface (CLI)
 
@@ -87,16 +82,4 @@ Available commands:
 list                # List discovered peers
 files               # List local shared files
 get <filename>      # Request a file from a peer
-
-
-## Project Structure
-
-udp-p2p/
-├── peer.py          # Main entry point and CLI
-├── discovery.py     # Peer discovery via UDP broadcast
-├── sender.py        # Reliable UDP sender
-├── receiver.py      # Reliable UDP receiver
-├── protocol.py      # Message encoding/decoding
-├── files/           # Shared directory
-└── README.md
-
+```
